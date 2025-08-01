@@ -190,6 +190,12 @@
 // }
 
 'use client';
+declare global {
+  interface Window {
+    html2pdf: any;
+  }
+}
+
 import { useState, useRef } from 'react';
 
 export default function Home() {
@@ -212,7 +218,6 @@ export default function Home() {
 
   const downloadPDF = () => {
     if (recipeRef.current && typeof window !== 'undefined') {
-      // @ts-ignore: html2pdf is available via CDN
       const html2pdf = window.html2pdf;
       html2pdf().from(recipeRef.current).save('recipe.pdf');
     }
