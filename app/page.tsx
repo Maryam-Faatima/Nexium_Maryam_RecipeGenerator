@@ -216,12 +216,20 @@ export default function Home() {
     setLoading(false);
   };
 
-  const downloadPDF = () => {
-    if (recipeRef.current && typeof window !== 'undefined') {
-      const html2pdf = window.html2pdf;
-      html2pdf().from(recipeRef.current).save('recipe.pdf');
-    }
-  };
+ const downloadPDF = async () => {
+  if (recipeRef.current && typeof window !== 'undefined') {
+    const html2pdf = (await import('html2pdf.js')).default;
+    html2pdf().from(recipeRef.current).save('recipe.pdf');
+    
+    // Show alert after short delay (to allow download to trigger)
+    setTimeout(() => {
+      alert('✅ Recipe downloaded as PDF!');
+    }, 1000);
+  }
+};
+
+
+
 
   return (
     <main style={{
